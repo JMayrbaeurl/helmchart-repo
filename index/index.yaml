@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  hivemq-edge:
+  - apiVersion: v2
+    appVersion: "2024.2"
+    created: "2024-03-07T19:18:40.9108908+01:00"
+    description: A Helm chart for HiveMQ Edge deployment to Kubernetes
+    digest: a2669b9e27c7ee4a50f74ae62ec467fed131125916e194a27404ee3631fd595a
+    home: https://www.hivemq.com/products/hivemq-edge/
+    name: hivemq-edge
+    sources:
+    - https://github.com/hivemq/hivemq-edge
+    type: application
+    urls:
+    - hivemq-edge-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-03-07T19:18:40.9108908+01:00"
