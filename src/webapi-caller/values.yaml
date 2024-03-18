@@ -23,7 +23,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "{{ .Chart.Name }}-sa"
+  name: "webapi-caller-sa"
 
 podAnnotations: {}
 podLabels: {}
@@ -64,7 +64,7 @@ volumes:
   projected:
     sources:
       - serviceAccountToken:
-          path: "{{ .Chart.Name }}-sa-token"
+          path: "webapi-caller-sa-token"
           audience: aio-mq
           expirationSeconds: 86400
 
