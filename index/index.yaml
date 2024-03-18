@@ -3,7 +3,7 @@ entries:
   hivemq-edge:
   - apiVersion: v2
     appVersion: "2024.2"
-    created: "2024-03-18T18:15:22.6898302+01:00"
+    created: "2024-03-18T19:33:03.8709961+01:00"
     description: A Helm chart for HiveMQ Edge deployment to Kubernetes
     digest: a2669b9e27c7ee4a50f74ae62ec467fed131125916e194a27404ee3631fd595a
     home: https://www.hivemq.com/products/hivemq-edge/
@@ -17,12 +17,12 @@ entries:
   webapi-caller:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-03-18T18:15:22.6916035+01:00"
+    created: "2024-03-18T19:33:03.872755+01:00"
     description: A Helm chart for Kubernetes
-    digest: c20b08799cfff8589b1c0513279ca15a97706e4da8f2c4f6b0b5ebee9d370d71
+    digest: e9d9fb0b2bd78b6ccd20a10d98c1ff463e31e124b0aae5b50dac182f34fc29bd
     name: webapi-caller
     type: application
     urls:
     - webapi-caller-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-18T18:15:22.6874774+01:00"
+generated: "2024-03-18T19:33:03.8575761+01:00"
