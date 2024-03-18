@@ -81,7 +81,7 @@ affinity: {}
 
 mqtt:
   brokerUrl: "aio-mq-dmqtt-frontend.azure-iot-operations.svc.cluster.local"
-  user: "$sat"
+  username: "$sat"
   pwfilepath: "/var/run/secrets/tokens/{{ .Chart.Name }}-sa-token"
   port: 8883
   topic: "serviceinvocation/uns-mapper/request"
