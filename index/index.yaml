@@ -3,7 +3,7 @@ entries:
   hivemq-edge:
   - apiVersion: v2
     appVersion: "2024.7"
-    created: "2024-12-06T12:54:58.2308607+01:00"
+    created: "2024-12-09T11:04:19.4712283+01:00"
     description: A Helm chart for HiveMQ Edge deployment to Kubernetes
     digest: e50828d22a55089ecc16654c39f80b7d5b939ec7ff495de291766c95d0624aee
     home: https://www.hivemq.com/products/hivemq-edge/
@@ -16,7 +16,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: "2024.3"
-    created: "2024-12-06T12:54:58.2292958+01:00"
+    created: "2024-12-09T11:04:19.4637521+01:00"
     description: A Helm chart for HiveMQ Edge deployment to Kubernetes
     digest: f92902bc956f12f80f577040535c73b4e60b4a244abe918fd4811b17abdf8937
     home: https://www.hivemq.com/products/hivemq-edge/
@@ -29,7 +29,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: "2024.2"
-    created: "2024-12-06T12:54:58.2137218+01:00"
+    created: "2024-12-09T11:04:19.4547913+01:00"
     description: A Helm chart for HiveMQ Edge deployment to Kubernetes
     digest: a2669b9e27c7ee4a50f74ae62ec467fed131125916e194a27404ee3631fd595a
     home: https://www.hivemq.com/products/hivemq-edge/
@@ -40,10 +40,21 @@ entries:
     urls:
     - hivemq-edge-0.1.0.tgz
     version: 0.1.0
+  iot-edge-opc-plc:
+  - apiVersion: v2
+    appVersion: 2.12.26
+    created: "2024-12-09T11:04:19.4741588+01:00"
+    description: A Helm chart for Kubernetes
+    digest: c2c85cd70869fa2699a5ce58c1cd0a20085eaa2462259b927e9d4e6cae7672a9
+    name: iot-edge-opc-plc
+    type: application
+    urls:
+    - iot-edge-opc-plc-0.1.0.tgz
+    version: 0.1.0
   webapi-caller:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-12-06T12:54:58.2459593+01:00"
+    created: "2024-12-09T11:04:19.4818826+01:00"
     description: A Helm chart for Kubernetes
     digest: 0f91ec255ca48b83c5eba7767c216292e7ef0ac89d377652d0c4fbf8b25ae63c
     name: webapi-caller
@@ -51,4 +62,4 @@ entries:
     urls:
     - webapi-caller-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-06T12:54:58.2042391+01:00"
+generated: "2024-12-09T11:04:19.4460081+01:00"
