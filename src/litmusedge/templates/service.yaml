@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "litmusedge.fullname" . }}
+  labels:
+    {{- include "litmusedge.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: https
+      protocol: TCP
+      name: https
+    - port: {{ .Values.service.lecomm }}
+      targetPort: 4222
+      protocol: TCP
+      name: lecomm
+  selector: 
+    {{- include "litmusedge.selectorLabels" . | nindent 4 }}

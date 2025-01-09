@@ -1,0 +1,16 @@
+{{- if .Values.persistence.create -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.persistence.claimname }}
+  labels:
+    {{- include "litmusedge.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size }}
+{{- end }}
