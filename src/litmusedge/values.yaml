@@ -40,8 +40,8 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
 
+# Requirement of Litmus Edge
 securityContext: 
   capabilities:
     add:
@@ -53,8 +53,8 @@ service:
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 443
-  lecomm: 4222
 
+# Persistence is for setting up the persistent volume more information can be found here: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 persistence:
   create: true
   claimname: litmusedge-data
@@ -110,10 +110,28 @@ tolerations: []
 
 affinity: {}
 
-# This section is for the MDS connector deployment
-mds:
-  enabled: false
-
-mdsNameOverride: "litmusedge-mds"
-mdsFullnameOverride: "litmusedge-mds"
+# Configuration for Litmus Edge solutions
+litmusEdgeSolutions:
+  mds:
+    enabled: false
+    litmusEdgePort: 4222
+    mdsNameOverride: "litmusedge-mds"
+    mdsFullnameOverride: "litmusedge-mds"
+    replicaCount: 1
+    imagePullSecrets: 
+      - name: litmus-credential
+    image:
+      repository: us-docker.pkg.dev/litmus-sales-enablement/litmus-edge/litmus-edge-mds
+      pullPolicy: IfNotPresent
+      tag: "0.0.4"
+    env: []
+    resources:
+      requests:
+        cpu: 1
+        memory: 512Mi
+      limits:
+        cpu: 1
+        memory: 1024Mi
+    volumeMounts: []
+    volumes: []
 

@@ -1,0 +1,40 @@
+{{- if .Values.litmusEdgeSolutions.mds.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "litmusedge.mds.fullname" . }}
+  labels:
+    {{- include "litmusedge.mds.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.litmusEdgeSolutions.mds.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "litmusedge.mds.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "litmusedge.mds.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.litmusEdgeSolutions.mds.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ include "litmusedge.mds.name" . }}
+          image: "{{ .Values.litmusEdgeSolutions.mds.image.repository }}:{{ .Values.litmusEdgeSolutions.mds.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.litmusEdgeSolutions.mds.image.pullPolicy }}
+          {{- with .Values.litmusEdgeSolutions.mds.env }}
+          env:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.litmusEdgeSolutions.mds.resources | nindent 12 }}
+          {{- with .Values.litmusEdgeSolutions.mds.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.litmusEdgeSolutions.mds.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

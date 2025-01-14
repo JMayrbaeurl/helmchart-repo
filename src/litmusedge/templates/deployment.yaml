@@ -40,9 +40,11 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-            - name: lecomm
-              containerPort: {{ .Values.service.lecomm }}
+            {{- if .Values.litmusEdgeSolutions.mds.enabled }}
+            - name: mdsInbound
+              containerPort: {{ .Values.litmusEdgeSolutions.mds.litmusEdgePort }}
               protocol: TCP
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
