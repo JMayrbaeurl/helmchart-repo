@@ -1,0 +1,17 @@
+{{- if .Values.service.externalAccess -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.externalName }}
+  labels:
+    {{- include "litmusedge.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.externalType}}
+  ports:
+    - port: {{ .Values.service.externalPort }}
+      targetPort: https
+      protocol: TCP
+      name: https  
+  selector: 
+    {{- include "litmusedge.selectorLabels" . | nindent 4 }}
+{{- end }}
