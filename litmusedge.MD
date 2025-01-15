@@ -9,8 +9,23 @@ This helm chart sample supports the deployment of [Litmus Edge](https://litmus.i
 The Litmus Edge container image is not available in a public repository. It's stored in private repository and therefore
 needs some setup in the Kubernetes cluster first (see [Litmus Edge installation documentation](https://docs.litmus.io/litmusedge/quickstart-guide/installation-and-deployments/kubernetes-installation)).
 
-Contact your Litmus account representative to get access to the service account .json file (typically called 'litmus-se-read-json'). Next create a corresponding
-secret in the target Kubernetes namespace ('le-prod' used here as an example):
+Contact your Litmus account representative to get access to the service account .json file (typically called 'litmus-se-read-json').
+
+Unfortunately up to now Litmus.io only provides a container imager for Litmus Edge that is tagged with 'latest' instead
+of using the real version for the tag. That's quite inconvenient, because any restart of the container could trigger an unwanted update.
+Therefore it's highly recommended to use an own private container image registry, e.g. Azure Container registry, and tag
+the Litmus Edge image manually. And of course override the helm chart with the corresponding values.
+
+You can either pull down the image to your local Docker repository and push it to your private Azure container registry
+or use the following Azure command line (shown for version 3.16.2 of Litmus Edge as currently available at the time
+of writing this):
+
+```Powershell
+$litmusRepoPassword = Get-Content ./litmus-se-read.json
+
+az acr import --name <name of your Azure container registry> --source us-docker.pkg.dev/litmus-sales-enablement/litmusedge/litmusedge-std-docker:latest `
+ --image litmusedge/litmusedge-std-docker:3.16.2 --username _json_key --password $litmusRepoPassword
+```
 
 ### Deployment
 
@@ -18,8 +33,8 @@ First create a namespace (recommended) and create the secret for the docker conf
 
 ```Powershell
 kubectl create namespace 'le-prod'
-$serviceAccountPassword = Get-Content ./litmus-se-read.json
-kubectl create secret docker-registry litmus-credential --docker-server=us-docker.pkg.dev --docker-username=_json_key --docker-password=serviceAccountPassword
+$litmusRepoPassword = Get-Content ./litmus-se-read.json
+kubectl create secret docker-registry litmus-credential --docker-server=us-docker.pkg.dev --docker-username=_json_key --docker-password=$litmusRepoPassword
 ```
 
 Add this helm repo if you've not done yet by ('jmayrbaeurl' is used as sample here, choose what ever you want)
@@ -38,12 +53,16 @@ helm upgrade --install litmusedge jmayrbaeurl/litmusedge -n le-prod --create-nam
 Attention: The helm chart creates a persistent volume claim for the default storage class, that's used to store all data.
 This persistent volume claim won't be deleted by deleting the Helm release.
 
-### Remarks
+### Deployment configuration
 
-As already mentioned, Litmus.io only provides a container image with the 'latest' tag in their private container image
-repository. That's quite inconvenient, because any restart of the container could trigger an unwanted update.
-Therefore it's highly recommended to use an own private container image registry, e.g. Azure Container registry, and tag
-the Litmus Edge image manually. And of course override the helm chart with the corresponding values.
+The following table shows some of the most important Helm deployment parameters with their default values. For
+a full list of the default values see the values.yaml file.
+
+| Parameter | Helm chart value | Default value | Description |
+| --------- | ---------------- | ------------- | ----------- |
+| Litmus.io Container image repository | image.repository | us-docker.pkg.dev/litmus-sales-enablement/litmusedge/litmusedge-std-docker | Litmus Edge image |
+| Litmus Edge version | image.tag | latest | Image tag used to pull Litmus Edge container image from repository |
+| Litmus Edge portal access | service.externalAccess | false | Will create external access to the portal |
 
 ### Deployment of Litmus Edge solutions
 
@@ -70,4 +89,16 @@ litmusEdgeSolutions:
         value: "<optional - recommended to set wih a value>"
       - name: BATCH_SIZE
         value: "100"
+```
+
+After doing the correct configuration in Litmus Edge you should see a log for the Litmus Edge MDS connector pod,
+that looks like the following:
+
+```Powershell
+2025-01-07T18:49:14.605Z        INFO    ⏳ Initializing a new client...
+2025-01-07T18:49:14.726Z        INFO    ⌛ Client initialized successfully!
+2025-01-07T18:49:14.741Z        INFO    📤 Publishing metadata payload  {"Device": "SimpleSimulator"}
+2025-01-07T18:49:14.741Z        INFO    🔊 Subscribed to device {"Device": "SimpleSimulator"}
+2025-01-07T18:49:14.742Z        INFO    📤 Publishing metadata payload  {"Device": "Prosys_Simulation_Server_Adv"}
+2025-01-07T18:49:14.742Z        INFO    🔊 Subscribed to device {"Device": "Prosys_Simulation_Server_Adv"}
 ```
